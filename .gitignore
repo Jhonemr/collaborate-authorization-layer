@@ -1,0 +1,31 @@
+## .NET build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.user
+*.suo
+
+## Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+coverage*.json
+coverage*.xml
+
+## IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Local secrets — none are used in this project, but this keeps it that way
+*.pfx
+*.p12
+appsettings.*.Local.json
+secrets.json

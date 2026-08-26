@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6091B332-E1DB-4944-9A94-ADECD3505452}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaborate.TokenExchange", "src\Collaborate.TokenExchange\Collaborate.TokenExchange.csproj", "{EDB2726F-5467-45CE-9753-F6A9ED0A5671}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7E5003BA-915D-4CAC-B3A7-8584A8621EF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaborate.TokenExchange.Tests", "tests\Collaborate.TokenExchange.Tests\Collaborate.TokenExchange.Tests.csproj", "{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDB2726F-5467-45CE-9753-F6A9ED0A5671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB2726F-5467-45CE-9753-F6A9ED0A5671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB2726F-5467-45CE-9753-F6A9ED0A5671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB2726F-5467-45CE-9753-F6A9ED0A5671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDB2726F-5467-45CE-9753-F6A9ED0A5671} = {6091B332-E1DB-4944-9A94-ADECD3505452}
+		{4BD503B7-2B9B-4B1C-8104-FCE61AD8591E} = {7E5003BA-915D-4CAC-B3A7-8584A8621EF4}
+	EndGlobalSection
+EndGlobal
