@@ -91,6 +91,9 @@ Four controls prevent confused deputy — all four, not a subset:
 | **Scope narrowing as intersection** — `requested ∩ subject token ∩ client ceiling ∩ current PDP` | Privilege escalation |
 | **Actor entitlement check** — may this client act for this user? | The classic omission; this is where the vulnerability lives |
 | **Short lifetime** (60–300s) | Requires revocation infrastructure for exchanged tokens |
+| **Delegation depth cap** — one hop, counted from nested `act` claims | A delegated token is re-delegated onward toward a higher-trust audience |
+
+**Two deliberate deviations from RFC 8693.** The spec makes `audience` optional (§2.1); we require it, because an unpinned token is the confused-deputy problem restated — no audience, no token. And §4.4's `may_act` claim, the spec's own mechanism for recording who may act for a subject, is not used: an embedded claim freezes the decision at issue time, which is exactly the staleness this design avoids everywhere else. The entitlement lookup runs at exchange time instead, so a withdrawn authorization takes effect immediately. One rule falls out of the same reasoning: when no scope survives the intersection the exchange refuses, rather than issuing a scopeless token that a downstream service might read as unrestricted.
 
 The sharp edge is scenario (a), an external client acting for its own employee: **a client must be structurally incapable of acting for a user outside its own firm.** The client record already carries `firmId` from the broker design, so the exchange refuses when `subject.firmId ≠ client.firmId`. This is a structural invariant with a dedicated test, not a policy row someone can misconfigure. First-party internal services that legitimately act across firms are modelled as an explicit, separately-named actor constraint rather than a special case of the same check.
 
