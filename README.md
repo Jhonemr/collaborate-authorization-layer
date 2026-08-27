@@ -9,6 +9,18 @@ dotnet test     # 27 tests
 dotnet run --project src/Collaborate.TokenExchange
 ```
 
+## Deliverables
+
+| Requested | Here |
+|---|---|
+| 1. Design document | [DESIGN.md](DESIGN.md) |
+| 2. Code | this repository |
+| 3. Session history *(optional)* | [docs/AI-USAGE.pdf](docs/AI-USAGE.pdf) — curated; full transcript available on request |
+| 4. Diagrams | [docs/diagrams.pdf](docs/diagrams.pdf) |
+
+[docs/DESIGN.pdf](docs/DESIGN.pdf) is the design document and diagrams combined into one
+illustrated file, if that reads more easily than the two separately.
+
 ## Why this slice
 
 Option C is the only one of the three that exercises the confused-deputy problem the brief
