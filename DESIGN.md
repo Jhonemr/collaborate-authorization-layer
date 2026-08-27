@@ -83,7 +83,7 @@ One Redis read, then a pure in-process function maps (role, overrides, firm poli
 
 One endpoint and one rule set serves both delegation scenarios. The caller presents its own client credentials plus a `subject_token`; the AS returns a JWT with `sub` = the user, `act` = the calling party, `aud` pinned to one downstream service, and narrowed scope.
 
-Four controls prevent confused deputy — all four, not a subset:
+Five controls prevent confused deputy — all five, not a subset:
 
 | Control | Failure if omitted |
 |---|---|
@@ -117,11 +117,10 @@ Phase 3's shadow mode matters: it lets the decision function be validated agains
 
 ## 3. Testing Strategy
 
-- **Pure functions, table-driven.** Scope intersection and the permission evaluator are pure by construction, so the full matrix (role × override × firm policy × action) is testable with no infrastructure. This is deliberate: the security-critical logic is the part that needs exhaustive coverage, so it is the part kept free of I/O.
-- **Negative tests as first-class.** Cross-firm delegation refused; scope escalation refused; token replayed at the wrong audience refused; expired subject token refused; a scope the user has *lost* dropped even though the subject token still carries it. That last one is the test that proves PDP consultation actually happens at mint time.
-- **Invalidation timing.** Assert that a permission change propagates to a denied decision within the target window, measured, not assumed.
-- **Integration** with test-signed tokens and an in-memory client registry; no live IdP required.
-- **Load test** the PDP at target throughput with a realistic key distribution, including a deliberate hot-workspace case.
+- **Pure functions, table-driven.** Scope intersection and the permission evaluator are pure by construction, so the full matrix (role × override × firm policy × action) is testable with no infrastructure. The security-critical logic is deliberately the part kept free of I/O.
+- **Negative tests as first-class.** Cross-firm delegation, scope escalation, replay at the wrong audience, expired subject tokens — all refused. Plus the case that proves PDP consultation happens at mint time: a scope the user has *lost* is dropped even though the subject token still carries it.
+- **Invalidation timing.** Assert a permission change reaches a denied decision inside the target window — measured, not assumed.
+- **Load** against the PDP at target throughput with a realistic key distribution, including a deliberate hot-workspace case.
 
 ## 4. Evaluation & Observability
 
@@ -130,10 +129,10 @@ The requirement "revocation takes effect within seconds" is an aspiration unless
 Supporting signals:
 
 - PDP decision latency p50/p99, and cache hit ratio.
-- **Denies by reason.** A spike is either a misconfiguration or an attack; both warrant a page.
-- **Cross-firm refusals at the exchange endpoint should be ~0.** Any non-zero rate is either a broken integration or an attempted confused-deputy attack, and is worth investigating individually rather than graphing.
-- DB fallback rate and circuit-breaker state, as the early warning for cache degradation.
-- **Immutable audit log of every exchange**, recording `sub` and `act` — attributability to the specific user is a stated requirement, not just a debugging aid.
+- **Denies by reason.** A spike is either misconfiguration or attack; both warrant a page.
+- **Cross-firm refusals at the exchange should sit at zero.** Any non-zero rate is a broken integration or an attempted confused-deputy attack — investigate individually rather than graph.
+- DB fallback rate and circuit-breaker state, as early warning for cache degradation.
+- **Immutable audit log of every exchange**, recording `sub` and `act` — attributability is a stated requirement, not a debugging aid.
 
 ## 5. Failure Modes & Tradeoffs
 
@@ -147,4 +146,4 @@ Supporting signals:
 
 **Accepted tradeoffs.** Cached authorization means a staleness window exists by definition; the design bounds and measures it rather than pretending otherwise. Enforcing at the API layer keeps downstream services simple but makes that layer security-critical. And scope narrowing distinguishes two cases deliberately: a scope the subject token never had is an escalation attempt and fails loudly, while a scope the user has *since lost* is dropped silently and reported back in the response — the first is an attack signal worth surfacing, the second is ordinary staleness that should not break a legitimate integration.
 
-**Where I would not trust AI on this system.** Authorization logic fails silently and permissively — a scope-narrowing bug does not throw, it grants. Generated code here reads plausibly and is wrong in ways tests must catch rather than review. The intersection logic, the firm-boundary invariant, and anything touching token validation are the places to write the tests first and treat generated implementations as drafts to be verified against the RFCs.
+*AI usage on this exercise — where its output was corrected, and where it should not be trusted in this domain — is covered separately in [docs/AI-USAGE.pdf](docs/AI-USAGE.pdf).*
