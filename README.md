@@ -16,7 +16,7 @@ dotnet run --project src/Collaborate.TokenExchange
 | 1. Design document | [DESIGN.md](DESIGN.md) |
 | 2. Code | this repository |
 | 3. Session history *(optional)* | [docs/AI-USAGE.pdf](docs/AI-USAGE.pdf) — curated; full transcript available on request |
-| 4. Diagrams | [docs/diagrams.pdf](docs/diagrams.pdf) |
+| 4. Diagrams | [docs/DIAGRAMS.pdf](docs/DIAGRAMS.pdf) |
 
 [docs/DESIGN.pdf](docs/DESIGN.pdf) is the design document and diagrams combined into one
 illustrated file, if that reads more easily than the two separately.
